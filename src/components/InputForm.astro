@@ -19,7 +19,6 @@ if (Astro.request.method === 'post') {
     await db.insert(Transactions).values(Transaction);
 }
 
-
 const transactions = await db.select().from(Transactions);
 ---
 
@@ -33,6 +32,7 @@ const transactions = await db.select().from(Transactions);
         <input type="number" placeholder="Value" name="amount" required/>
     </label>
     <label>
+        Is it an Income or an Expense?
         <select name="type" required>
             <option value="expense" selected>Expense</option>
             <option value="income">Income</option>
