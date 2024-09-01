@@ -12,5 +12,5 @@ interface Recurrence {
     frequency: 'daily' | 'weekly' | 'monthly' | 'yearly';
     interval: number;
     dayOfWeek?: number;
-    endDate: string;
+    endDate: Date;
 }
