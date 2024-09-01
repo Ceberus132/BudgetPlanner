@@ -1,6 +1,6 @@
 import {column, defineDb, defineTable} from 'astro:db';
 
-const Transaction = defineTable({
+const Transactions = defineTable({
   columns: {
     payee: column.text(),
     amount: column.number(),
@@ -16,5 +16,5 @@ const Transaction = defineTable({
 
 // https://astro.build/db/config
 export default defineDb({
-  tables: { Transaction }
+  tables: { Transactions }
 });
