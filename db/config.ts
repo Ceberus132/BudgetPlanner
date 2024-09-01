@@ -2,15 +2,15 @@ import {column, defineDb, defineTable} from 'astro:db';
 
 const Transaction = defineTable({
   columns: {
-    source: column.text(),
+    payee: column.text(),
     amount: column.number(),
     type: column.text(),
     date: column.date(),
     recurring: column.boolean(),
-    frequency: column.text(),
-    interval: column.number(),
-    dayOfWeek: column.number(),
-    endDate: column.date()
+    frequency: column.text({ optional: true }),
+    interval: column.number({ optional: true }),
+    dayOfWeek: column.number({ optional: true }),
+    endDate: column.date({ optional: true })
   }
 })
 

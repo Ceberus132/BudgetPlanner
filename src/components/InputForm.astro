@@ -3,13 +3,12 @@ import {db, Transaction} from 'astro:db';
 
 if (Astro.request.method === 'post') {
     const formData = await Astro.request.formData();
-    const source = formData.get('source')
+    const payee = formData.get('source')
     const amount = formData.get('amount')
     const type = formData.get('type')
     const date = formData.get('date')
     const recurring = formData.get('recurring')
-    console.log(source)
-    await db.insert(Transaction).values({source, amount, type, date, recurring})
+    await db.insert(Transaction).values({payee, amount, type, date, recurring})
 }
 
 const transactions = await db.select().from(Transaction);
@@ -43,11 +42,9 @@ const transactions = await db.select().from(Transaction);
     <button type="submit">Add</button>
 </form>
 
-{
-    transactions.map(({ Source, Amount }) => (
+{transactions.map(({ payee, amount }) => (
     <article>
-        <p>Author: {Source}</p>
-        <p>{Amount}</p>
+        <p>{payee}</p>
+        <p>{amount}</p>
     </article>
-        ))
-    }
+))}
