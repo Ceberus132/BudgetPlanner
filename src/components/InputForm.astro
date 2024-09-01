@@ -1,23 +1,32 @@
 ---
-import {db, Transaction} from 'astro:db';
+import {db, Transactions} from 'astro:db';
 
 if (Astro.request.method === 'post') {
     const formData = await Astro.request.formData();
-    const payee = formData.get('source')
-    const amount = formData.get('amount')
-    const type = formData.get('type')
-    const date = formData.get('date')
-    const recurring = formData.get('recurring')
-    await db.insert(Transaction).values({payee, amount, type, date, recurring})
+
+    const Transaction = {
+        payee: formData.get('payee') as string,
+        amount: parseFloat(formData.get('amount') as string),
+        type: formData.get('type') as string,
+        date: new Date(formData.get('date') as string),
+        recurring: !!formData.get('recurring'),
+        frequency: formData.get('frequency') as string || undefined,
+        interval: formData.get('interval') ? parseInt(formData.get('interval') as string) : undefined,
+        dayOfWeek: formData.get('dayOfWeek') ? parseInt(formData.get('dayOfWeek') as string) : undefined,
+        endDate: formData.get('endDate') ? new Date(formData.get('endDate') as string) : undefined
+    };
+
+    await db.insert(Transactions).values(Transaction);
 }
 
-const transactions = await db.select().from(Transaction);
+
+const transactions = await db.select().from(Transactions);
 ---
 
 <form method="post">
     <label>
         Where does it come from?
-        <input type="text" placeholder="Source" name="source" required/>
+        <input type="text" placeholder="Source" name="payee" required/>
     </label>
     <label>
         How much is it?
