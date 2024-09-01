@@ -1,31 +1,53 @@
 ---
+import {db, Transaction} from 'astro:db';
 
+if (Astro.request.method === 'post') {
+    const formData = await Astro.request.formData();
+    const source = formData.get('source')
+    const amount = formData.get('amount')
+    const type = formData.get('type')
+    const date = formData.get('date')
+    const recurring = formData.get('recurring')
+    console.log(source)
+    await db.insert(Transaction).values({source, amount, type, date, recurring})
+}
+
+const transactions = await db.select().from(Transaction);
 ---
 
 <form method="post">
     <label>
         Where does it come from?
-        <input type="text" placeholder="Source" required/>
+        <input type="text" placeholder="Source" name="source" required/>
     </label>
     <label>
         How much is it?
-        <input type="number" placeholder="Value" required/>
+        <input type="number" placeholder="Value" name="amount" required/>
     </label>
     <label>
-        <select required>
+        <select name="type" required>
             <option value="expense" selected>Expense</option>
             <option value="income">Income</option>
         </select>
     </label>
     <label>
         When did it occur?
-        <input type="date"/>
+        <input type="date" name="date"/>
     </label>
 
     <label>
-        Does it reoccur?
-        <input type="checkbox"/>
+        Does it recur?
+        <input type="checkbox" name="recurring"/>
     </label>
 
     <button type="submit">Add</button>
 </form>
+
+{
+    transactions.map(({ Source, Amount }) => (
+    <article>
+        <p>Author: {Source}</p>
+        <p>{Amount}</p>
+    </article>
+        ))
+    }
