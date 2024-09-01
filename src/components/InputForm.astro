@@ -1,0 +1,31 @@
+---
+
+---
+
+<form method="post">
+    <label>
+        Where does it come from?
+        <input type="text" placeholder="Source" required/>
+    </label>
+    <label>
+        How much is it?
+        <input type="number" placeholder="Value" required/>
+    </label>
+    <label>
+        <select required>
+            <option value="expense" selected>Expense</option>
+            <option value="income">Income</option>
+        </select>
+    </label>
+    <label>
+        When did it occur?
+        <input type="date"/>
+    </label>
+
+    <label>
+        Does it reoccur?
+        <input type="checkbox"/>
+    </label>
+
+    <button type="submit">Add</button>
+</form>
