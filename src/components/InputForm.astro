@@ -3,7 +3,7 @@ import {db, Transactions} from 'astro:db';
 const transactions = await db.select().from(Transactions);
 ---
 
-<form method="post">
+<form action="/api/create_transaction" method="post">
     <label>
         Where does it come from?
         <input type="text" placeholder="Source" name="payee" required/>
