@@ -1,8 +1,8 @@
-import {db, Transaction} from 'astro:db';
+import {db, Transactions} from 'astro:db';
 
 // https://astro.build/db/seed
 export default async function seed() {
-	await db.insert(Transaction).values([
+	await db.insert(Transactions).values([
         {
             payee: 'Telekom',
             amount: 1204.50,
