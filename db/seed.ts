@@ -16,6 +16,17 @@ export default async function seed() {
             type: 'expense',
             date: new Date(),
             recurring: false
+        },
+        {
+            payee: 'Savings',
+            amount: 31.4,
+            type: 'expense',
+            date: new Date(),
+            recurring: true,
+            frequency: 'daily',
+            interval: 2,
+            dayOfWeek: 3,
+            endDate: new Date()
         }
     ])
 }
