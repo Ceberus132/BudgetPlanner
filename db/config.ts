@@ -14,7 +14,14 @@ const Transactions = defineTable({
   }
 })
 
+const Categories = defineTable({
+  columns: {
+    name: column.text(),
+    payees: column.json()
+  }
+})
+
 // https://astro.build/db/config
 export default defineDb({
-  tables: { Transactions }
+  tables: { Transactions, Categories }
 });
