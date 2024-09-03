@@ -6,6 +6,12 @@ const getMonthDays = (year: number, month: number) => {
     return new Date(year, month + 1, 0).getDate();
 };
 
+const getPreviousMonthDays = (year: number, month: number) => {
+    const firstDay = new Date(year, month, 1).getDay();
+    const previousDays = getMonthDays(year, month - 1);
+    return Array.from({length: firstDay}, (_, i) => previousDays - firstDay + i + 1)
+}
+
 export default function Calendar() {
     const [year] = useState<number>(new Date().getFullYear());
 
@@ -16,6 +22,10 @@ export default function Calendar() {
                     <h2 className={''}>{month} {year}</h2>
                     <div className={'grid grid-cols-7 gap-2 text-center'}>
                         {days.map((day) => (
+                            <div key={day} className={''}>{day}</div>
+                        ))}
+
+                        {getPreviousMonthDays(year, monthIndex).map((day) => (
                             <div key={day} className={''}>{day}</div>
                         ))}
 
