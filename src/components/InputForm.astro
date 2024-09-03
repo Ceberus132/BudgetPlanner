@@ -1,5 +1,6 @@
 ---
 import {db, Transactions} from 'astro:db';
+import Calendar from "./Calendar";
 const transactions = await db.select().from(Transactions);
 ---
 
@@ -38,3 +39,5 @@ const transactions = await db.select().from(Transactions);
         <p>{amount}</p>
     </article>
 ))}
+
+<Calendar/>
