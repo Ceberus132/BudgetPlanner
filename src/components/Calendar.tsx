@@ -7,8 +7,15 @@ const getMonthDays = (year: number, month: number) => {
 };
 
 export default function Calendar() {
+    const [year] = useState<number>(new Date().getFullYear());
 
     return(
-        <div className={''}></div>
+        <div className={''}>
+            {months.map((month, monthIndex) => (
+                <div key={month} className={''}>
+                    <h2 className={''}>{month} {year}</h2>
+                </div>
+            ))}
+        </div>
     )
 }
