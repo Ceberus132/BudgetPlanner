@@ -18,6 +18,15 @@ export default function Calendar() {
                         {days.map((day) => (
                             <div key={day} className={''}>{day}</div>
                         ))}
+
+                        {Array.from({length: getMonthDays(year, monthIndex)}, (_, dayIndex) => {
+                            const formatedDate = new Date(year, monthIndex, dayIndex +1).toLocaleDateString('de-DE');
+                            return(
+                                <div key={dayIndex}>
+                                    <div className={''}>{formatedDate}</div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             ))}
