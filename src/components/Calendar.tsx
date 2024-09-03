@@ -14,6 +14,11 @@ export default function Calendar() {
             {months.map((month, monthIndex) => (
                 <div key={month} className={''}>
                     <h2 className={''}>{month} {year}</h2>
+                    <div className={'grid grid-cols-7 gap-2 text-center'}>
+                        {days.map((day) => (
+                            <div key={day} className={''}>{day}</div>
+                        ))}
+                    </div>
                 </div>
             ))}
         </div>
