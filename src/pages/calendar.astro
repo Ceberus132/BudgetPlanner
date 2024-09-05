@@ -32,12 +32,14 @@ const year = new Date().getFullYear();
                             const currentTransactions = getTransactions(formattedDate, transactions);
 
                             return (
-                                    <div class="bg-gray-800 rounded-lg shadow min-h-28 p-2">
+                                    <div class="bg-gray-800 rounded-lg shadow min-h-28 py-2 px-4">
                                         <div>{formattedDate}</div>
                                         {currentTransactions.length > 0 ? (
-                                                <div>
+                                                <div class="flex flex-col">
                                                     {currentTransactions.map((transaction) => (
-                                                            <p>{transaction.payee}</p><p class={transaction.type === 'income' ? 'text-red-600' : 'text-green-600'}>{transaction.amount}</p>
+                                                            <div class="flex flex-row justify-between">
+                                                                <p>{transaction.payee}</p><p class={transaction.type === 'income' ? 'text-red-600' : 'text-green-600'}>{transaction.amount}</p>
+                                                            </div>
                                                     ))}
                                                 </div>
                                         ) : (
