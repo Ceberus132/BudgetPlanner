@@ -1,0 +1,49 @@
+---
+import { getMonthDays, getPreviousMonthDays, getTransactions } from '../functions/calendarUtils.ts';
+import { db, Transactions } from "astro:db";
+
+const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+// Fetch transactions from the database
+const transactions = await db.select().from(Transactions);
+const year = new Date().getFullYear();
+---
+<div class="calendar">
+    {months.map((month, monthIndex) => (
+            <div class="month">
+                <h2 class="text-xl font-bold">{month} {year}</h2>
+                <div class="grid grid-cols-7 gap-2 text-center">
+                    {days.map((day) => (
+                            <div class="day-header">{day}</div>
+                    ))}
+
+                    <!-- Previous month's days -->
+                    {getPreviousMonthDays(year, monthIndex).map((day) => (
+                            <div class="day-previous text-gray-400">{day}</div>
+                    ))}
+
+                    <!-- Current month's days and transactions -->
+                    {Array.from({ length: getMonthDays(year, monthIndex) }, (_, dayIndex) => {
+                        const formattedDate = new Date(year, monthIndex, dayIndex + 1).toLocaleDateString('de-DE');
+                        const currentTransactions = getTransactions(formattedDate, transactions);
+
+                        return (
+                                <div key={dayIndex} class="day bg-gray-800 rounded-lg shadow min-h-14 p-2">
+                                    <div>{formattedDate}</div>
+                                    {currentTransactions.length > 0 ? (
+                                            <div>
+                                                {currentTransactions.map((transaction) => (
+                                                        <p>{transaction.payee} | {transaction.amount}</p>
+                                                ))}
+                                            </div>
+                                    ) : (
+                                            <div class="text-gray-500">No transactions</div>
+                                    )}
+                                </div>
+                        );
+                    })}
+                </div>
+            </div>
+    ))}
+</div>
