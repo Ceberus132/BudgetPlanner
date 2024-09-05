@@ -36,7 +36,7 @@ const year = new Date().getFullYear();
                                         {currentTransactions.length > 0 ? (
                                                 <div>
                                                     {currentTransactions.map((transaction) => (
-                                                            <p>{transaction.payee} | {transaction.amount}</p>
+                                                            <p>{transaction.payee}</p><p class={transaction.type === 'income' ? 'text-red-600' : 'text-green-600'}>{transaction.amount}</p>
                                                     ))}
                                                 </div>
                                         ) : (
