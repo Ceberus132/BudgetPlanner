@@ -1,5 +1,5 @@
 ---
-import { getMonthDays, getPreviousMonthDays, getTransactions } from '../functions/calendarUtils.ts';
+import { getMonthDays, getPreviousMonthDays, getTransactions, formatCurrency } from '../functions/calendarUtils.ts';
 import { db, Transactions } from "astro:db";
 import Layout from "../layouts/Layout.astro";
 
@@ -38,7 +38,7 @@ const year = new Date().getFullYear();
                                                 <div class="flex flex-col">
                                                     {currentTransactions.map((transaction) => (
                                                             <div class="flex flex-row justify-between">
-                                                                <p>{transaction.payee}</p><p class={transaction.type === 'income' ? 'text-red-600' : 'text-green-600'}>{transaction.amount}</p>
+                                                                <p>{transaction.payee}</p><p class={transaction.type === 'income' ? 'text-red-600' : 'text-green-600'}>{formatCurrency(transaction.amount)}</p>
                                                             </div>
                                                     ))}
                                                 </div>

@@ -16,3 +16,7 @@ export const getTransactions = (date: string, transactions: any[]): any[] => {
         return new Date(transaction.date).toLocaleDateString('de-DE') === date;
     });
 };
+
+export const formatCurrency = (amount: number): string => {
+    return new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'}).format(amount)
+}
