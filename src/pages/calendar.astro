@@ -29,7 +29,7 @@ const year = new Date().getFullYear();
                         const currentTransactions = getTransactions(formattedDate, transactions);
 
                         return (
-                                <div key={dayIndex} class="day bg-gray-800 rounded-lg shadow min-h-14 p-2">
+                                <div class="day bg-gray-800 rounded-lg shadow min-h-14 p-2">
                                     <div>{formattedDate}</div>
                                     {currentTransactions.length > 0 ? (
                                             <div>
