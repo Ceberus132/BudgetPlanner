@@ -2,6 +2,7 @@
 import {db, Transactions} from 'astro:db';
 const transactions = await db.select().from(Transactions);
 ---
+<a href="/calendar">Go to the Calendar</a>
 
 <form action="/api/create_transaction" method="post">
     <label>
