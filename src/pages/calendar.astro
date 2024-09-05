@@ -11,18 +11,19 @@ const transactions = await db.select().from(Transactions);
 const year = new Date().getFullYear();
 ---
 <Layout title="Budget Calendar">
-    <div class="calendar">
+    <a href="/">Go to the Budget List</a>
+    <div>
         {months.map((month, monthIndex) => (
-                <div class="month">
+                <div>
                     <h2 class="text-xl font-bold">{month} {year}</h2>
                     <div class="grid grid-cols-7 gap-2 text-center">
                         {days.map((day) => (
-                                <div class="day-header">{day}</div>
+                                <div>{day}</div>
                         ))}
 
                         <!-- Previous month's days -->
                         {getPreviousMonthDays(year, monthIndex).map((day) => (
-                                <div class="day-previous text-gray-400">{day}</div>
+                                <div class="text-gray-400">{day}</div>
                         ))}
 
                         <!-- Current month's days and transactions -->
@@ -31,7 +32,7 @@ const year = new Date().getFullYear();
                             const currentTransactions = getTransactions(formattedDate, transactions);
 
                             return (
-                                    <div class="day bg-gray-800 rounded-lg shadow min-h-14 p-2">
+                                    <div class="bg-gray-800 rounded-lg shadow min-h-28 p-2">
                                         <div>{formattedDate}</div>
                                         {currentTransactions.length > 0 ? (
                                                 <div>
