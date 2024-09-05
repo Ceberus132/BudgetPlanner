@@ -1,0 +1,42 @@
+---
+import {db, Transactions} from 'astro:db';
+const transactions = await db.select().from(Transactions);
+---
+<a href="/calendar">Go to the Calendar</a>
+
+<form action="/api/create_transaction" method="post">
+    <label>
+        Where does it come from?
+        <input type="text" placeholder="Source" name="payee" required/>
+    </label>
+    <label>
+        How much is it?
+        <input type="number" step="0.01" placeholder="Value" name="amount" required/>
+    </label>
+    <label>
+        Is it an Income or an Expense?
+        <select name="type" required>
+            <option value="expense" selected>Expense</option>
+            <option value="income">Income</option>
+        </select>
+    </label>
+    <label>
+        When did it occur?
+        <input type="date" name="date" required/>
+    </label>
+
+    <label>
+        Does it recur?
+        <input type="checkbox" name="recurring"/>
+    </label>
+
+    <button type="submit">Add</button>
+</form>
+
+{transactions.map(({ payee, amount, date }) => (
+    <article>
+        <p>{payee}</p>
+        <p>{amount}</p>
+        <p>{new Date(date).toLocaleDateString('de-DE')}</p>
+    </article>
+))}
