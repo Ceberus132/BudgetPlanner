@@ -1,6 +1,5 @@
 ---
 import {db, Transactions} from 'astro:db';
-import Calendar from "./Calendar";
 const transactions = await db.select().from(Transactions);
 ---
 
@@ -33,11 +32,10 @@ const transactions = await db.select().from(Transactions);
     <button type="submit">Add</button>
 </form>
 
-{transactions.map(({ payee, amount }) => (
+{transactions.map(({ payee, amount, date }) => (
     <article>
         <p>{payee}</p>
         <p>{amount}</p>
+        <p>{new Date(date).toLocaleDateString('de-DE')}</p>
     </article>
 ))}
-
-<Calendar/>
