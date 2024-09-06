@@ -6,21 +6,18 @@ export default async function seed() {
         {
             payee: 'Telekom',
             amount: 1204.50,
-            type: 'income',
             date: new Date(),
             recurring: false,
         },
         {
             payee: 'Rent',
             amount: 375.13,
-            type: 'expense',
             date: new Date(),
             recurring: false
         },
         {
             payee: 'Savings',
             amount: 31.4,
-            type: 'expense',
             date: new Date(),
             recurring: true,
             frequency: 'daily',
