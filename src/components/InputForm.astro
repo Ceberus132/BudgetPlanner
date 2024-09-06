@@ -11,7 +11,7 @@ const transactions = await db.select().from(Transactions);
     </label>
     <label>
         How much is it?
-        <input type="number" step="0.01" placeholder="Value" name="amount" required/>
+        <input type="number" step="0.01" min="-9999" placeholder="Value" name="amount" required/>
     </label>
     <label>
         Is it an Income or an Expense?
