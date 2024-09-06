@@ -17,6 +17,14 @@ export const getTransactions = (date: string, transactions: any[]): any[] => {
     });
 };
 
+export const getDailySummary = (date: string, transactions: any[]): string => {
+    const filterTransactions = getTransactions(date, transactions)
+    const sum = filterTransactions.reduce((sum, transaction) => {
+        return sum + transaction.amount;
+    }, 0);
+    return formatCurrency(sum)
+}
+
 export const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'}).format(amount)
 }

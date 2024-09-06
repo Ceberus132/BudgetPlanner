@@ -2,6 +2,7 @@
 import { getMonthDays, getPreviousMonthDays, getTransactions, formatCurrency } from '../functions/calendarUtils.ts';
 import { db, Transactions } from "astro:db";
 import Layout from "../layouts/Layout.astro";
+import {getDailySummary} from "../functions/calendarUtils";
 
 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -45,6 +46,7 @@ const year = new Date().getFullYear();
                                         ) : (
                                                 <div class="text-gray-500">No transactions</div>
                                         )}
+                                        {getDailySummary(formattedDate, transactions)}
                                     </div>
                             );
                         })}
