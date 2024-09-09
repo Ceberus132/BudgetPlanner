@@ -8,7 +8,6 @@ export async function POST(context: APIContext): Promise<Response> {
         const Transaction = {
             payee: formData.get('payee') as string,
             amount: parseFloat(formData.get('amount') as string),
-            type: formData.get('type') as string,
             date: new Date(formData.get('date') as string),
             recurring: !!formData.get('recurring'),
             frequency: formData.get('frequency') as string || undefined,
@@ -18,8 +17,8 @@ export async function POST(context: APIContext): Promise<Response> {
         };
 
         // Validate required fields
-        if (!Transaction.payee || !Transaction.amount || !Transaction.type || !Transaction.date) {
-            return new Response(`Missing required fields ${Transaction.payee} ${Transaction.amount} ${Transaction.type} ${Transaction.date} ${Transaction.recurring}`, { status: 400 });
+        if (!Transaction.payee || !Transaction.amount || !Transaction.date) {
+            return new Response(`Missing required fields ${Transaction.payee} ${Transaction.amount} ${Transaction.date} ${Transaction.recurring}`, { status: 400 });
         }
 
         await db.insert(Transactions).values(Transaction);
