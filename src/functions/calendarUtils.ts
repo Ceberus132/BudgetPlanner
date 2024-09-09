@@ -10,6 +10,22 @@ export const getMonthDays = (year: number, month: number): (string | null)[] => 
     return [...emptyDays, ...monthDays];
 };
 
+type Week = { weekNumber: number, days: (string | null)[] };
+// function to get am array of all the weeks in the specified month and year
+export const getMonthWeeks = (year: number, month: number): Week[] => {
+    const days = getMonthDays(year, month);
+    const weeks: Week[] = [];
+    days.reduce((currentWeek: Week, day, index) => {
+        currentWeek.days.push(day);
+        if (currentWeek.days.length === 7 || index === days.length - 1) {
+            weeks.push(currentWeek);
+            currentWeek = { weekNumber: currentWeek.weekNumber + 1, days: [] };
+        }
+        return currentWeek;
+    }, { weekNumber: 1, days: [] });
+    return weeks;
+};
+
 // Helper function to get the days from the previous month that appear in the current month's calendar
 export const getPreviousMonthDays = (year: number, month: number): number[] => {
     const firstDayOfMonth = new Date(year, month, 1).getDay();
