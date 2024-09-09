@@ -1,8 +1,7 @@
 ---
-import { getMonthDays, getPreviousMonthDays, getTransactions, formatCurrency } from '../functions/calendarUtils.ts';
+import { getMonthDays, getTransactions, formatCurrency, getDailySummary, getMonthWeeks } from '../functions/calendarUtils';
 import { db, Transactions } from "astro:db";
 import Layout from "../layouts/Layout.astro";
-import {getDailySummary} from "../functions/calendarUtils";
 
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -15,22 +14,26 @@ const year = new Date().getFullYear();
     <a href="/">Go to the Budget List</a>
     <div>
         {months.map((month, monthIndex) => (
-                <div>
-                    <h2 class="text-xl font-bold">{month} {year}</h2>
-                    <div class="grid grid-cols-7 gap-2 text-center">
-                        {days.map((day) => (
-                                <div>{day}</div>
-                        ))}
+            <div>
+                <h2 class="text-xl font-bold">{month} {year}</h2>
+                <div class="grid grid-cols-9 text-center font-bold mb-2">
+                    <p>Week Nr.</p>
+                    {days.map((day) => (
+                            <div>{day}</div>
+                    ))}
+                    <p>Summary</p>
+                </div>
+                {getMonthWeeks(year, monthIndex).map(week => (
+                    <div class="grid grid-cols-9 gap-2 text-center mb-2">
+                        <p>{week.weekNumber}</p>
 
-                        <!-- Previous month's days -->
-                        {getPreviousMonthDays(year, monthIndex).map((day) => (
-                                <div class="text-gray-400">{day}</div>
-                        ))}
-
-                        <!-- Current month's days and transactions -->
-                        {Array.from({ length: getMonthDays(year, monthIndex) }, (_, dayIndex) => {
-                            const formattedDate = new Date(year, monthIndex, dayIndex + 1).toLocaleDateString('de-DE');
-                            const currentTransactions = getTransactions(formattedDate, transactions);
+                        {week.days.map(day => {
+                            let formattedDate = ''
+                            let currentTransactions = []
+                            if (day) {
+                                formattedDate = new Date(year, monthIndex, parseInt(day)).toLocaleDateString('de-DE');
+                                currentTransactions = getTransactions(formattedDate, transactions);
+                            }
 
                             return (
                                     <div class="bg-gray-800 rounded-lg shadow min-h-28 py-2 px-4">
@@ -48,10 +51,13 @@ const year = new Date().getFullYear();
                                         )}
                                         <p class={parseInt(getDailySummary(formattedDate, transactions)) >= 0 ? 'text-green-600' : 'text-red-600'}>{getDailySummary(formattedDate, transactions)}</p>
                                     </div>
-                            );
+                            )
                         })}
+
+                        <p>Summary</p>
                     </div>
-                </div>
+                ))}
+            </div>
         ))}
     </div>
 </Layout>
