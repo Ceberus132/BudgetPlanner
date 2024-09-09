@@ -1,6 +1,13 @@
-// Helper function to get the total days in a month
-export const getMonthDays = (year: number, month: number): number => {
-    return new Date(year, month + 1, 0).getDate();
+// function to get the Days from the specified month and year
+export const getMonthDays = (year: number, month: number): (string | null)[] => {
+    // function to get the day of the week (Monday = 0, Sunday = 6)
+    const getWeekday = (date: Date): number => (date.getDay() === 0 ? 6 : date.getDay() - 1);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDayOfMonth = getWeekday(new Date(year, month, 1));
+    // TODO: Fill with the past days instead of null
+    const emptyDays = Array(firstDayOfMonth).fill(null);
+    const monthDays = Array.from({ length: daysInMonth }, (_, i) => (i + 1).toString());
+    return [...emptyDays, ...monthDays];
 };
 
 // Helper function to get the days from the previous month that appear in the current month's calendar
